@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<title>Учить он меня будет</title>
+	<style type="text/css">
+		.image {
+			width: 605px;
+			margin: 100px auto;
+			font-family: sans-serif;
+			font-size: 12px;
+			position: relative;
+			background: url(https://dl.dropboxusercontent.com/u/615583/zakopanniy.png) no-repeat;
+			height: 230px;
+			opacity: 1;
+		    -webkit-transition: all 1s linear;
+		    -moz-transition: all 1s linear;
+		    -o-transition: all 1s linear;
+		    transition: all 1s linear;
+		}
+		.hidden {
+			opacity: 0;
+		}
+		.text {
+			-moz-box-sizing: border-box;
+		    -webkit-box-sizing: border-box;
+		    box-sizing: border-box;
+		    border-radius: 10px;
+			position: absolute;
+			width: 20px;
+			top: 3px;
+			left: 47px;
+			width: 160px;
+			background: #fff;
+			padding: 0 20px;
+			text-align: center;
+			overflow: hidden;
+			height: 85px;
+			line-height: 85px;
+		}
+		.center {
+			display: inline-block;
+			line-height: 1;
+			vertical-align: middle;
+		}
+	</style>
+</head>
+<body>
+<div class="image hidden">
+	<div class="text">
+		<span class="center">
+			
+		</span>
+	</div>	
+</div>
+<script type="text/javascript">
+
+	var str = decodeURIComponent(window.location.hash.split('#')[1]);
+
+	var text = str || 'Что-то сломалось...';
+	var container = document.querySelector('.center').innerHTML = text;
+	var img = new Image();
+	img.onload = function () {
+		document.querySelector('.image').className = 'image';
+	}
+	img.src = 'https://dl.dropboxusercontent.com/u/615583/zakopanniy.png';
+
+
+	window.onhashchange = function () {
+		document.querySelector('.center').innerHTML = decodeURIComponent(window.location.hash.split('#')[1]);
+	}
+
+</script>
+</body>
+</html>
