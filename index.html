@@ -55,20 +55,20 @@
 </div>
 <script type="text/javascript">
 
-	var str = decodeURIComponent(window.location.hash.split('#')[1]);
+	var textIt = function () {
+		var str = window.location.hash.split('#')[1];
+		var text = (str) ? decodeURIComponent(str) : 'У вас что-то сломалось...';
+		document.querySelector('.center').innerHTML = text;
+	}
 
-	var text = str || 'Что-то сломалось...';
-	var container = document.querySelector('.center').innerHTML = text;
 	var img = new Image();
 	img.onload = function () {
 		document.querySelector('.image').className = 'image';
 	}
 	img.src = 'https://dl.dropboxusercontent.com/u/615583/zakopanniy.png';
 
-
-	window.onhashchange = function () {
-		document.querySelector('.center').innerHTML = decodeURIComponent(window.location.hash.split('#')[1]);
-	}
+	window.onload = textIt;
+	window.onhashchange = textIt;
 
 </script>
 </body>
