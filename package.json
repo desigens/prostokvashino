@@ -1,0 +1,6 @@
+{
+  "name": "prostokvashino",
+  "devDependencies": {
+    "webshot": "~0.8"
+  }
+}
