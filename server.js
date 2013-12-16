@@ -3,6 +3,8 @@ var app = express();
 var fs = require('fs'); // Файлы
 var webshot = require('webshot'); // Скриншоты
 
+var port = 80;
+
 
 // Существующая статика
 app.use(express.static(__dirname));
@@ -25,7 +27,7 @@ app.get('/pic/', function(req, res){
 		} else {
 			// Если картинки нет, создам ее и отдаем клиенту
 			console.log('make file');
-			webshot('http://localhost:8080/', pic, function () {
+			webshot('http://localhost:' + port + '/', pic, function () {
 			  	res.sendfile(pic);
 			  	console.log('file done');
 			});
@@ -33,4 +35,4 @@ app.get('/pic/', function(req, res){
 	});
 });
 
-app.listen(80);
+app.listen(port);
