@@ -1,5 +1,8 @@
 {
   "name": "prostokvashino",
+  "scripts": {
+    "start": "forever start -с nodemon server.js"
+  },
   "dependencies": {
     "forever": "*",
     "express": "*",

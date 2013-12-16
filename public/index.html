@@ -10,13 +10,13 @@
 			font-family: sans-serif;
 			font-size: 12px;
 			position: relative;
-			background: url(https://dl.dropboxusercontent.com/u/615583/zakopanniy.png) no-repeat;
+			background: #f0f url(https://dl.dropboxusercontent.com/u/615583/zakopanniy.png) no-repeat;
 			height: 230px;
 			opacity: 1;
-		    -webkit-transition: all 1s linear;
+		  /*  -webkit-transition: all 1s linear;
 		    -moz-transition: all 1s linear;
 		    -o-transition: all 1s linear;
-		    transition: all 1s linear;
+		    transition: all 1s linear;*/
 		}
 		.hidden {
 			opacity: 0;
@@ -43,6 +43,11 @@
 			line-height: 1;
 			vertical-align: middle;
 		}
+		.click {
+			cursor: pointer;
+			text-decoration: underline;
+			color: navy;
+		}
 	</style>
 </head>
 <body>
@@ -53,6 +58,10 @@
 		</span>
 	</div>	
 </div>
+
+<span class="click">Замечательная картинка:</span><br>
+<img data-src="/pic/" width="500" id="test">
+
 <script type="text/javascript">
 
 	var textIt = function () {
@@ -69,6 +78,17 @@
 
 	textIt();
 	window.onhashchange = textIt;
+
+	// Показываем картинку при клике
+	var click = document.querySelector('.click');
+	click.onclick = function () {
+		click.innerHTML = 'Давайте дождемся...';
+		var test = document.querySelector('#test');
+		test.onload = function () {
+			click.innerHTML = 'Вау!'
+		};
+		test.src = test.getAttribute('data-src');		
+	}
 
 </script>
 </body>
