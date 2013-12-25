@@ -1,17 +1,23 @@
 var express = require('express'); // Сервер
 var app = express();
+
 var fs = require('fs'); // Файлы
 var webshot = require('webshot'); // Скриншоты
 
 var port = 8000;
 
+app.set('views', __dirname + '/views');
+app.set('view engine', 'jade');
 
 // Существующая статика
 app.use(express.static(__dirname + '/public'));
 
-// Главная страница
+// Главная страница (сгенерирована из jade)
 app.get('/', function(req, res){
-  res.sendfile('public/index.html');
+  res.render('main', {
+  	title: req.query.title || 'У вас что-то сломалось',
+  	text: req.query.text || 'У вас что-то сломалось...'
+  })
 });
 
 // URL картинки

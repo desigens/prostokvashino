@@ -7,6 +7,7 @@
     "forever": "*",
     "express": "*",
     "webshot": "*",
-    "nodemon": "*"
+    "nodemon": "*",
+    "jade": "*"
   }
 }
