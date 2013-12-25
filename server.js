@@ -26,23 +26,23 @@ app.get('/', function(req, res){
 app.get('/pic/', function(req, res){
 
 	// GET-часть адреса
-	var query = req.url.split('?')[1];
+	var query = req.url.split('?')[1] || "";
 
 	// Хэш для имени картинки 
 	var hash = crypto.createHash('md5').update(query).digest('hex') + 'sd';
 
 	// Уникальное имя картинки
-	var pic = hash + '.png';
+	var pic = 'generated-images/' + hash + '.png';
 
-	fs.exists('generated-images/' + pic, function (exists) {
+	fs.exists(pic, function (exists) {
 		if (exists) {
 			// Если картинка уже существует на диске, используем ее
-			res.sendfile('generated-images/' + pic);
+			res.sendfile(pic);
 		} else {
 
 			// Если картинки нет, создам ее и отдаем клиенту
 			console.log('make file');
-			webshot('http://localhost:' + port + '/?' + query, 'generated-images/' + pic, function () {
+			webshot('http://localhost:' + port + '/?' + query, pic, function () {
 			  	res.sendfile(pic);
 			  	console.log('file done');
 			});
