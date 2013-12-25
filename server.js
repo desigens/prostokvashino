@@ -4,6 +4,8 @@ var app = express();
 var fs = require('fs'); // Файлы
 var webshot = require('webshot'); // Скриншоты
 
+var crypto = require('crypto');
+
 var port = 8000;
 
 app.set('views', __dirname + '/views');
@@ -23,17 +25,24 @@ app.get('/', function(req, res){
 // URL картинки
 app.get('/pic/', function(req, res){
 
-	// Уникальное имя картинки
-	var pic = 'webshot' + Math.floor((Math.random()*10)+1) + '.png';
+	// GET-часть адреса
+	var query = req.url.split('?')[1];
 
-	fs.exists(pic, function (exists) {
+	// Хэш для имени картинки 
+	var hash = crypto.createHash('md5').update(query).digest('hex') + 'sd';
+
+	// Уникальное имя картинки
+	var pic = hash + '.png';
+
+	fs.exists('generated-images/' + pic, function (exists) {
 		if (exists) {
 			// Если картинка уже существует на диске, используем ее
-			res.sendfile(pic);
+			res.sendfile('generated-images/' + pic);
 		} else {
+
 			// Если картинки нет, создам ее и отдаем клиенту
 			console.log('make file');
-			webshot('http://localhost:' + port + '/', pic, function () {
+			webshot('http://localhost:' + port + '/?' + query, 'generated-images/' + pic, function () {
 			  	res.sendfile(pic);
 			  	console.log('file done');
 			});

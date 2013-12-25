@@ -8,6 +8,7 @@
     "express": "*",
     "webshot": "*",
     "nodemon": "*",
-    "jade": "*"
+    "jade": "*",
+    "crypto": "*"
   }
 }
