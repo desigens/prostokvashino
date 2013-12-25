@@ -3,11 +3,11 @@ var app = express();
 var fs = require('fs'); // Файлы
 var webshot = require('webshot'); // Скриншоты
 
-var port = 80;
+var port = 8000;
 
 
 // Существующая статика
-app.use(express.static(__dirname));
+app.use(express.static(__dirname + '/public'));
 
 // Главная страница
 app.get('/', function(req, res){
