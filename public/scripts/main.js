@@ -10,12 +10,21 @@ img.onload = function () {
 img.src = image;
 
 // Показываем картинку при клике
-var click = document.querySelector('.click');
+var click = document.querySelector('.b-link__get');
+var url = document.querySelector('.b-link__url');
+var query = window.location.href.split('?')[1];
 click.onclick = function () {
 	click.innerHTML = 'Давайте дождемся...';
+	
 	var test = document.querySelector('#test');
-	test.onload = function () {
-		click.innerHTML = 'Вау!'
-	};
-	test.src = test.getAttribute('data-src');		
+	
+	$.ajax({
+		url: '/pic/?' + query,
+	}).done(function (data, status, res) {
+		var link = window.location.origin + '/amazing/' + res.getResponseHeader('Permanent');
+		url.innerHTML = '<a href="' + link + '">' + link + '</a>';
+		click.parentElement.removeChild(click);
+	});
 }
+
+

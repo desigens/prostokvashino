@@ -22,6 +22,11 @@ app.get('/', function(req, res){
   })
 });
 
+app.get('/amazing/:hash?', function(req, res) {
+	var pic = 'generated-images/' + req.params.hash + '.png';
+	res.sendfile(pic);
+});
+
 // URL картинки
 app.get('/pic/', function(req, res){
 
@@ -35,6 +40,9 @@ app.get('/pic/', function(req, res){
 	var pic = 'generated-images/' + hash + '.png';
 
 	fs.exists(pic, function (exists) {
+
+		res.set('Permanent', hash);
+
 		if (exists) {
 			// Если картинка уже существует на диске, используем ее
 			res.sendfile(pic);

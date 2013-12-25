@@ -9,7 +9,11 @@ html
 			div.text
 				span.center #{text}
 
-		span.click Замечательная картинка
-		br
-		img#test(data-src="/pic/", width="500")
+		div.b-link
+			span.b-link__get Получить ссылку на картинку
+			br
+			div.b-link__url
+			img.b-link__image#test(data-src="/pic/", width="500")
+
+		script(type="text/javascript", src="/scripts/jquery.js")
 		script(type="text/javascript", src="/scripts/main.js")
