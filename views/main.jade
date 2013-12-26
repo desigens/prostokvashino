@@ -6,9 +6,18 @@ html
 		link(rel='stylesheet', type="text/css", href='/styles/main.css')
 	body
 		div.image.hidden(data-src="/images/zakopanniy.png")
-			div.text
-				span.center(contenteditable="true") !{text}
-
+			div.text#text0
+				span.center(contenteditable="true")
+					if text[0]
+						!{text[0]}
+					else
+						Не правильно ты, Дядя Федор, бутерброд держишь
+			div.text#text1
+				span.center(contenteditable="true")
+					if text[1]
+						!{text[1]}
+					else
+						Учить он меня будет, пиздюк шерстяной
 		div.b-link
 			div.b-link__get Получить ссылку на картинку
 			div.b-link__url

@@ -15,12 +15,15 @@ var click = document.querySelector('.b-link__get');
 var url = document.querySelector('.b-link__url');
 var textContainer = document.querySelector('.center');
 var query = window.location.href.split('?')[1];
-var _text;
+var _query;
+
+var textContainers = document.querySelectorAll('.center');
 
 click.onclick = function () {
-	var text = textContainer.innerHTML;
-	_text = text;
-	query = 'text=' + text;
+	var query = serialize(textContainers);
+	click.innerHTML = 'Терпение, мой друг...';
+	_query = query;
+
 	$.ajax({
 		url: '/pic/?' + query,
 	}).done(function (data, status, res) {
@@ -28,14 +31,31 @@ click.onclick = function () {
 		url.innerHTML = '<a href="' + link + '">' + link + '</a>';
 		click.innerHTML = '';
 	});
-	click.innerHTML = 'Терпение, мой друг...';
 };
 
 textContainer.onkeyup = function () {
-	var text = textContainer.innerHTML;
-	if (text !== _text) {
+	var query = serialize(textContainers);
+	if (query !== _query) {
 		url.innerHTML = '';
 	}
 	click.innerHTML = 'Получить ссылку на картинку';
 };
+
+function serialize (elements) {
+	var texts = [],
+		query = '',
+		i = 0;
+
+	Array.prototype.forEach.call(elements, function (el) {
+		var text = el.innerHTML;
+		texts.push(text);
+	});
+
+	texts.forEach(function (text) {
+		query = query + 'text[' + i + ']=' + texts[i] + '&';
+		i++;
+	});
+
+	return query;
+} 
 

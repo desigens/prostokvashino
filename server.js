@@ -18,7 +18,7 @@ app.use(express.static(__dirname + '/public'));
 app.get('/', function(req, res){
   res.render('main', {
   	title: req.query.title || 'У вас что-то сломалось',
-  	text: req.query.text || 'У вас что-то сломалось...'
+  	text: req.query.text || []
   })
 });
 
