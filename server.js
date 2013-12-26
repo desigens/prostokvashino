@@ -24,7 +24,15 @@ app.get('/', function(req, res){
 
 app.get('/amazing/:hash?', function(req, res) {
 	var pic = 'generated-images/' + req.params.hash + '.png';
-	res.sendfile(pic);
+	
+
+	fs.exists(pic, function (exists) {
+		if (exists) {
+			res.sendfile(pic);
+		} else {
+			res.status(404).send('Тут пусто, ребятушки.');
+		}
+	});
 });
 
 // URL картинки
@@ -50,10 +58,18 @@ app.get('/pic/', function(req, res){
 
 			// Если картинки нет, создам ее и отдаем клиенту
 			console.log('make file');
-			webshot('http://localhost:' + port + '/?' + query, pic, function () {
+			webshot('http://localhost:' + port + '/?' + query, pic, {
+				windowSize: {
+					width: 605, height: 230
+				},
+				shotOffset: {
+					top: 100
+				}
+			}, function () {
 			  	res.sendfile(pic);
 			  	console.log('file done');
 			});
+
 		}
 	});
 });

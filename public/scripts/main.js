@@ -9,22 +9,33 @@ img.onload = function () {
 }
 img.src = image;
 
-// Показываем картинку при клике
-var click = document.querySelector('.b-link__get');
+
+// Показываем ссылку на картинку при клике
+var click = document.querySelector('.b-link__get'); 
 var url = document.querySelector('.b-link__url');
+var textContainer = document.querySelector('.center');
 var query = window.location.href.split('?')[1];
+var _text;
+
 click.onclick = function () {
-	click.innerHTML = 'Давайте дождемся...';
-	
-	var test = document.querySelector('#test');
-	
+	var text = textContainer.innerHTML;
+	_text = text;
+	query = 'text=' + text;
 	$.ajax({
 		url: '/pic/?' + query,
 	}).done(function (data, status, res) {
 		var link = window.location.origin + '/amazing/' + res.getResponseHeader('Permanent');
 		url.innerHTML = '<a href="' + link + '">' + link + '</a>';
-		click.parentElement.removeChild(click);
+		click.innerHTML = '';
 	});
-}
+	click.innerHTML = 'Терпение, мой друг...';
+};
 
+textContainer.onkeyup = function () {
+	var text = textContainer.innerHTML;
+	if (text !== _text) {
+		url.innerHTML = '';
+	}
+	click.innerHTML = 'Получить ссылку на картинку';
+};
 

@@ -1,3 +1,8 @@
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
 .image {
   width: 605px;
   margin: 100px auto;
@@ -30,14 +35,62 @@
   background: #fff;
   padding: 0 20px;
   text-align: center;
-  overflow: hidden;
   height: 85px;
   line-height: 85px;
 }
 .center {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  min-height: 1em;
+  min-width: 100px;
   display: inline-block;
   line-height: 1;
   vertical-align: middle;
+  position: relative;
+  padding: 5px;
+}
+.center:hover,
+.center:focus {
+  outline: 2px #87c1eb solid;
+}
+.center:hover:before,
+.center:focus:before {
+  content: 'Редактируй это!';
+}
+.center:hover:after,
+.center:focus:after {
+  content: '';
+}
+.center:before {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  position: absolute;
+  bottom: 100%;
+  width: 100%;
+  right: 100%;
+  font-size: 10px;
+  color: #87c1eb;
+  margin-bottom: 50px;
+  margin-right: 5px;
+  text-align: right;
+  font-style: italic;
+}
+.center:after {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  position: absolute;
+  width: 100px;
+  height: 100px;
+  border: 1px #87c1eb solid;
+  border-radius: 100%;
+  bottom: 100%;
+  margin-bottom: -45px;
+  margin-left: -50px;
+  left: 0;
+  clip: rect(0 100px 50px 50px);
 }
 .b-link {
   text-align: center;
@@ -46,10 +99,4 @@
   cursor: pointer;
   text-decoration: underline;
   color: navy;
-}
-.b-link__url {
-  border: 1px gray solid;
-}
-.b-link__url:empty {
-  border-color: #fff;
 }
