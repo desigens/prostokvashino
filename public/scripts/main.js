@@ -14,48 +14,47 @@ img.src = image;
 var click = document.querySelector('.b-link__get'); 
 var url = document.querySelector('.b-link__url');
 var textContainer = document.querySelector('.center');
-var query = window.location.href.split('?')[1];
-var _query;
+var _data;
 
 var textContainers = document.querySelectorAll('.center');
 
 click.onclick = function () {
-	var query = serialize(textContainers);
+	var data = serialize(textContainers);;
 	click.innerHTML = 'Терпение, мой друг...';
-	_query = query;
+	_data = data;
+
+	
 
 	$.ajax({
-		url: '/pic/?' + query,
-	}).done(function (data, status, res) {
-		var link = window.location.origin + '/amazing/' + res.getResponseHeader('Permanent');
+		type: 'post',
+		url: '/',
+		data: data,
+		contentType: "application/json"
+	}).done(function (data) {
+		var link = window.location.origin + '/amazing/' + data;
 		url.innerHTML = '<a href="' + link + '">' + link + '</a>';
 		click.innerHTML = '';
 	});
 };
 
 textContainer.onkeyup = function () {
-	var query = serialize(textContainers);
-	if (query !== _query) {
+	var data = serialize(textContainers);
+	if (data !== _data) {
 		url.innerHTML = '';
 	}
 	click.innerHTML = 'Получить ссылку на картинку';
 };
 
 function serialize (elements) {
-	var texts = [],
-		query = '',
-		i = 0;
+	var bubbles = [];
 
 	Array.prototype.forEach.call(elements, function (el) {
 		var text = el.innerHTML;
-		texts.push(text);
+		bubbles.push({
+			text: text
+		});
 	});
 
-	texts.forEach(function (text) {
-		query = query + 'text[' + i + ']=' + texts[i] + '&';
-		i++;
-	});
-
-	return query;
+	return JSON.stringify(bubbles);
 } 
 

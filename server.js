@@ -14,51 +14,52 @@ app.set('view engine', 'jade');
 // Существующая статика
 app.use(express.static(__dirname + '/public'));
 
+// Обработка запросов и получение json в req.body
+app.use(express.json());
+
+// Текст по-умолчанию
+var obj = [
+			{"text": "У вас что-то сломалось", "x": 47, "y": 3},
+			{"text": "Учить он меня будет, пиздюк шерстяной", "x": 472, "y": 88}
+		]
+
 // Главная страница (сгенерирована из jade)
 app.get('/', function(req, res){
-  res.render('main', {
-  	title: req.query.title || 'У вас что-то сломалось',
-  	text: req.query.text || []
-  })
+
+	if (req.query.json) {
+		obj = JSON.parse(req.query.json);
+	}
+
+	res.render('main', {
+		bubbles: obj
+	})
 });
 
-app.get('/amazing/:hash?', function(req, res) {
-	var pic = 'generated-images/' + req.params.hash + '.png';
-	
+// Передача JSON-данных для скриншота
+app.post('/', function (req, res) {
+	if (req.body.length) {
+		obj = req.body;
+	};
 
-	fs.exists(pic, function (exists) {
-		if (exists) {
-			res.sendfile(pic);
-		} else {
-			res.status(404).send('Тут пусто, ребятушки.');
-		}
-	});
-});
-
-// URL картинки
-app.get('/pic/', function(req, res){
-
-	// GET-часть адреса
-	var query = req.url.split('?')[1] || "";
+	// Cтрока для передачи JSON через GET
+	var jsonString = encodeURI(JSON.stringify(obj));
 
 	// Хэш для имени картинки 
-	var hash = crypto.createHash('md5').update(query).digest('hex') + 'sd';
+	var hash = crypto.createHash('md5')
+				.update(jsonString).digest('hex');
 
 	// Уникальное имя картинки
 	var pic = 'generated-images/' + hash + '.png';
 
 	fs.exists(pic, function (exists) {
 
-		res.set('Permanent', hash);
-
 		if (exists) {
 			// Если картинка уже существует на диске, используем ее
-			res.sendfile(pic);
+			res.send(hash);
 		} else {
 
-			// Если картинки нет, создам ее и отдаем клиенту
 			console.log('make file');
-			webshot('http://localhost:' + port + '/?' + query, pic, {
+			webshot('http://localhost:' + port + '/?json=' + jsonString, pic, {
 				windowSize: {
 					width: 605, height: 230
 				},
@@ -66,10 +67,23 @@ app.get('/pic/', function(req, res){
 					top: 100
 				}
 			}, function () {
-			  	res.sendfile(pic);
+			  	res.send(hash);
 			  	console.log('file done');
 			});
+		
+		}
+	});
+});
 
+app.get('/amazing/:hash?', function(req, res) {
+	var pic = 'generated-images/' + req.params.hash + '.png';
+
+
+	fs.exists(pic, function (exists) {
+		if (exists) {
+			res.sendfile(pic);
+		} else {
+			res.status(404).send('Тут пусто, ребятушки.');
 		}
 	});
 });
