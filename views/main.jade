@@ -8,7 +8,7 @@ html
 		div.image.hidden(data-src="/images/zakopanniy.png")
 			if (bubbles)
 				each b, i in bubbles
-					div.text(id="text#{i}", style="top: #{b.y}; left: #{b.x}", draggable="true")
+					div.text(id="text#{i}", style="top: #{b.y}; left: #{b.x}; width: #{b.w}; height: #{b.h}; line-height: #{b.h}", draggable="true")
 						span.center(contenteditable="true") !{b.text}
 		div.b-link
 			div.b-link__get Получить ссылку на картинку

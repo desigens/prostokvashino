@@ -18,11 +18,23 @@ var _data;
 
 var textContainers = document.querySelectorAll('.text');
 
+$('.image').on('dblclick', function (e) {
+	console.log(e);
+	$el = $('<div draggable="true" class="text"><span contenteditable="true" class="center"></span></div>');
+	$el.css({
+		left: e.offsetX - 30 + 'px',
+		top: e.offsetY - 30 + 'px'
+	})
+	$(this).append($el);
+	bubbleInit($el);
+	textContainers = document.querySelectorAll('.text');
+	console.log(textContainers);
+})
+
 click.onclick = function () {
-	var data = serialize(textContainers);;
+	var data = serialize(textContainers);
 	click.innerHTML = 'Терпение, мой друг...';
 	_data = data;
-
 	$.ajax({
 		type: 'post',
 		url: '/',
@@ -47,18 +59,41 @@ function serialize (elements) {
 	var bubbles = [];
 
 	Array.prototype.forEach.call(elements, function (el) {
-		var text = el.querySelector('.center').innerHTML,
-			x = el.style.left,
-			y = el.style.top;
 		bubbles.push({
-			text: text,
-			x: x,
-			y: y
+			text: el.querySelector('.center').innerHTML,
+			x: el.style.left,
+			y: el.style.top,
+			w: el.style.width,
+			h: el.style.height
 		});
 	});
 
 	return JSON.stringify(bubbles);
 } 
 
-$('[draggable]').draggable({ cancel: "[contenteditable]" }).find('[contenteditable]').on('click', function () {$(this).focus()});
+function bubbleInit($el) {
+
+	$close = $('<div class="close">x</div>');
+	$close.on('click', function () {
+		$(this).closest('.text').remove();
+	});
+
+	$el.resizable({
+		resize: function () {
+			clearInterval(timer);
+			$(this).css({
+				lineHeight: $(this).css('height')
+			});
+		}
+	})
+	.draggable({ cancel: "[contenteditable]" })
+	.append($close)
+	.find('[contenteditable]')
+	.on('click', function () {$(this).focus()})
+}
+
+bubbleInit($('[draggable]'));
+
+
+	
 

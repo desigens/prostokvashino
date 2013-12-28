@@ -32,16 +32,33 @@ body {
   text-align: center;
   font-size: 12px;
   cursor: move;
-}
-#text0 {
-  min-height: 65px;
-  line-height: 65px;
-  width: 160px;
-}
-#text1 {
-  width: 132px;
+  width: 120px;
   height: 55px;
   line-height: 55px;
+}
+.text .close {
+  transition: all 1s 1s linear;
+  opacity: 0;
+  visibility: hidden;
+  font-size: 10px;
+  position: absolute;
+  left: 100%;
+  bottom: 100%;
+  cursor: pointer;
+  line-height: 10px;
+  padding: 2px;
+  background: #fff;
+  border-radius: 10px;
+  height: 10px;
+  width: 10px;
+  margin-left: -4px;
+  margin-bottom: -4px;
+}
+.text:hover .close {
+  transition: all 1s linear;
+  display: block;
+  opacity: .5;
+  visibility: visible;
 }
 .center {
   cursor: text;
@@ -100,6 +117,14 @@ body {
   margin-left: -50px;
   left: 0;
   clip: rect(0 100px 50px 50px);
+}
+.ui-resizable-handle {
+  width: 10px;
+  height: 10px;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  cursor: se-resize;
 }
 .b-link {
   text-align: center;
