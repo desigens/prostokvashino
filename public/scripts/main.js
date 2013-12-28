@@ -95,7 +95,7 @@ function bubbleInit($el) {
 	.on('click', function () {$(this).focus()})
 }
 
-bubbleInit($('[draggable]'));
+bubbleInit($('.text'));
 
 
 	
