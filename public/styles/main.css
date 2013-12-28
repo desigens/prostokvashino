@@ -8,15 +8,8 @@ body {
   width: 600px;
   margin: 100px auto;
   position: relative;
-  /*background: #f0f url(https://dl.dropboxusercontent.com/u/615583/zakopanniy.png) no-repeat;*/
-
   height: 240px;
   opacity: 1;
-  /*  -webkit-transition: all 1s linear;
-    -moz-transition: all 1s linear;
-    -o-transition: all 1s linear;
-    transition: all 1s linear;*/
-
 }
 .hidden {
   opacity: 0;
@@ -32,8 +25,9 @@ body {
   text-align: center;
   font-size: 12px;
   cursor: move;
-  width: 120px;
-  height: 55px;
+  min-width: 100px;
+  width: 140px;
+  min-height: 55px;
   line-height: 55px;
 }
 .text .close {
@@ -73,19 +67,16 @@ body {
   position: relative;
   padding: 5px;
 }
-.center:empty,
-.center:hover,
+.text:hover .center,
 .center:focus {
   outline: 2px #87c1eb solid;
 }
-.center:empty:before,
-.center:hover:before,
+.text:hover .center:before,
 .center:focus:before {
   content: 'Редактируй это!';
   white-space: nowrap;
 }
-.center:empty:after,
-.center:hover:after,
+.text:hover .center:after,
 .center:focus:after {
   content: '';
 }

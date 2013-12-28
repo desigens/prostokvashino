@@ -19,7 +19,6 @@ var _data;
 var textContainers = document.querySelectorAll('.text');
 
 $('.image').on('dblclick', function (e) {
-	console.log(e);
 	$el = $('<div draggable="true" class="text"><span contenteditable="true" class="center"></span></div>');
 	$el.css({
 		left: e.offsetX - 30 + 'px',
@@ -73,6 +72,8 @@ function serialize (elements) {
 
 function bubbleInit($el) {
 
+	// $(this)
+
 	$close = $('<div class="close">x</div>');
 	$close.on('click', function () {
 		$(this).closest('.text').remove();
@@ -80,13 +81,15 @@ function bubbleInit($el) {
 
 	$el.resizable({
 		resize: function () {
-			clearInterval(timer);
 			$(this).css({
 				lineHeight: $(this).css('height')
 			});
 		}
 	})
 	.draggable({ cancel: "[contenteditable]" })
+	.on('dblclick', function (e) {
+		return false;
+	})
 	.append($close)
 	.find('[contenteditable]')
 	.on('click', function () {$(this).focus()})
