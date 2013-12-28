@@ -16,14 +16,12 @@ var url = document.querySelector('.b-link__url');
 var textContainer = document.querySelector('.center');
 var _data;
 
-var textContainers = document.querySelectorAll('.center');
+var textContainers = document.querySelectorAll('.text');
 
 click.onclick = function () {
 	var data = serialize(textContainers);;
 	click.innerHTML = 'Терпение, мой друг...';
 	_data = data;
-
-	
 
 	$.ajax({
 		type: 'post',
@@ -49,12 +47,18 @@ function serialize (elements) {
 	var bubbles = [];
 
 	Array.prototype.forEach.call(elements, function (el) {
-		var text = el.innerHTML;
+		var text = el.querySelector('.center').innerHTML,
+			x = el.style.left,
+			y = el.style.top;
 		bubbles.push({
-			text: text
+			text: text,
+			x: x,
+			y: y
 		});
 	});
 
 	return JSON.stringify(bubbles);
 } 
+
+$('[draggable]').draggable({ cancel: "[contenteditable]" }).find('[contenteditable]').on('click', function () {$(this).focus()});
 

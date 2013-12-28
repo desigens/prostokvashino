@@ -17,14 +17,19 @@ app.use(express.static(__dirname + '/public'));
 // Обработка запросов и получение json в req.body
 app.use(express.json());
 
-// Текст по-умолчанию
-var obj = [
-			{"text": "У вас что-то сломалось", "x": 47, "y": 3},
-			{"text": "Учить он меня будет, пиздюк шерстяной", "x": 472, "y": 88}
-		]
+var obj;
+
+var defaults = 	function () {
+	return [
+		{"text": "У вас что-то сломалось", "x": "16px", "y": "16px"},
+		{"text": "Учить он меня будет, пиздюк шерстяной", "x": "457px", "y": "83px"}
+	]
+}
 
 // Главная страница (сгенерирована из jade)
 app.get('/', function(req, res){
+
+	obj = defaults();
 
 	if (req.query.json) {
 		obj = JSON.parse(req.query.json);
@@ -37,9 +42,12 @@ app.get('/', function(req, res){
 
 // Передача JSON-данных для скриншота
 app.post('/', function (req, res) {
+
+	obj = defaults();
+
 	if (req.body.length) {
 		obj = req.body;
-	};
+	}
 
 	// Cтрока для передачи JSON через GET
 	var jsonString = encodeURI(JSON.stringify(obj));
@@ -61,7 +69,7 @@ app.post('/', function (req, res) {
 			console.log('make file');
 			webshot('http://localhost:' + port + '/?json=' + jsonString, pic, {
 				windowSize: {
-					width: 605, height: 230
+					width: 600, height: 240
 				},
 				shotOffset: {
 					top: 100
