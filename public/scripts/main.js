@@ -19,7 +19,7 @@ var _data;
 var textContainers = document.querySelectorAll('.text');
 
 $('.image').on('dblclick', function (e) {
-	$el = $('<div draggable="true" class="text"><span contenteditable="true" class="center"></span></div>');
+	$el = $('<div class="text"><span contenteditable="true" class="center"></span></div>');
 	$el.css({
 		left: e.offsetX - 30 + 'px',
 		top: e.offsetY - 30 + 'px'
